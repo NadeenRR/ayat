@@ -5,15 +5,18 @@ import 'dart:math';
 import 'package:http/http.dart' as http;
 
 class QuranApi {
-  int randomSurah = Random().nextInt(144) + 1; // 92
+  int randomSurah = Random().nextInt(114) + 1; // 92
 
   Future<int> getTotalAyahs() async {
     final response = await http
         .get(Uri.parse('https://api.quran.gading.dev/surah/$randomSurah'));
-    final data = jsonDecode(response.body);
-    print("${data['data']['numberOfVerses']} nadeen");
-    print("${data['data']['name']['long']} rad");
-    return data['data']['numberOfVerses'];
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      print("${data['data']['numberOfVerses']} nadeen");
+      print("${data['data']['name']['long']} rad");
+      return data['data']['numberOfVerses'];
+    }
+    return Future.error('something wrong');
   }
 
   Future<Map<String, dynamic>> generateRandomAyah() async {

@@ -27,18 +27,22 @@ class MyApp extends StatelessWidget {
 // import 'dart:convert';
 // import 'dart:math';
 
-// int randomSurah = Random().nextInt(144) + 1; // 92
+// int randomSurah = Random().nextInt(114) + 1; // 92
 
 // Future<int> getTotalAyahs() async {
 //   final response = await http
 //       .get(Uri.parse('https://api.quran.gading.dev/surah/$randomSurah'));
-//   final data = jsonDecode(response.body);
-//   print("${data['data']['numberOfVerses']} nadeen");
-//   print("${data['data']['name']['long']} rad");
-//   return data['data']['numberOfVerses'];
+//   if (response.statusCode == 200) {
+//     final data = jsonDecode(response.body);
+//     print("${data['data']['numberOfVerses']} nadeen");
+//     print("${data['data']['name']['long']} rad");
+//     return data['data']['numberOfVerses'];
+//   }
+//   return Future.error('something wrong');
 // }
 
 // Future<Map<String, dynamic>> generateRandomAyah() async {
+//   //  await Future.delayed(Duration(seconds: 3));
 //   final totalAyahs = await getTotalAyahs(); // 123
 //   final randomAyahNumber = Random().nextInt(totalAyahs);
 

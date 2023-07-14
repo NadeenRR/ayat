@@ -55,6 +55,14 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    String getAyah() {
+      if (ayah.isNotEmpty) {
+        return ayah;
+      } else {
+        return 'بسم الله الرحمن الرحيم';
+      }
+    }
+
     return Scaffold(
       body: Stack(children: [
         Container(
@@ -69,20 +77,21 @@ class _HomePageState extends State<HomePage> {
             child: Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(colors: [
-                  Colors.white.withOpacity(0.2),
-                  Colors.white.withOpacity(0.2),
+                  Colors.white.withOpacity(0.1),
+                  Colors.white.withOpacity(0.1),
                 ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
                 // color: Colors.white.withOpacity(0.0),
               ),
               child: Center(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      ayah,
+                      getAyah(),
                       style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                      ),
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
