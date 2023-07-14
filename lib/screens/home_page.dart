@@ -24,11 +24,12 @@ class _HomePageState extends State<HomePage> {
   late String ayah;
 //  late int numberOfAyah;
 
-  // void updateUi() {
-  //   // surah = quranModel.surah;
-  //   ayah = quranModel.ayah;
-  //   // numberOfAyah = quranModel.numberOfAyah;
-  // }
+  void updateUi() {
+    // surah = quranModel.surah;
+    getImage();
+    getAyah();
+    // numberOfAyah = quranModel.numberOfAyah;
+  }
 
   QuranApi quranApi = QuranApi();
 
@@ -47,59 +48,62 @@ class _HomePageState extends State<HomePage> {
     getImage();
     print('ddd');
     ayah = quranModel.ayah;
-    // updateUi();
+    updateUi();
     print('aaa');
 
     super.initState();
   }
 
+  String getAyah() {
+    if (ayah.isNotEmpty) {
+      return ayah;
+    } else {
+      return 'بسم الله الرحمن الرحيم';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    String getAyah() {
-      if (ayah.isNotEmpty) {
-        return ayah;
-      } else {
-        return 'بسم الله الرحمن الرحيم';
-      }
-    }
-
     return Scaffold(
-      body: Stack(children: [
-        Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: !isLoaded ? _assetsImage : _networkImage,
-            ),
-          ),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(colors: [
-                  Colors.white.withOpacity(0.1),
-                  Colors.white.withOpacity(0.1),
-                ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
-                // color: Colors.white.withOpacity(0.0),
+      body: GestureDetector(
+        onTap: () => updateUi,
+        child: Stack(children: [
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: !isLoaded ? _assetsImage : _networkImage,
               ),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      getAyah(),
-                      style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ],
+            ),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(colors: [
+                    Colors.white.withOpacity(0.1),
+                    Colors.white.withOpacity(0.1),
+                  ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+                  // color: Colors.white.withOpacity(0.0),
+                ),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        getAyah(),
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ]),
+        ]),
+      ),
     );
   }
 }
