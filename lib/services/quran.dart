@@ -20,6 +20,7 @@ class QuranApi {
   }
 
   Future<Map<String, dynamic>> generateRandomAyah() async {
+    await Future.delayed(Duration(seconds: 2));
     final totalAyahs = await getTotalAyahs(); // 123
     final randomAyahNumber = Random().nextInt(totalAyahs);
 

@@ -42,8 +42,7 @@ class MyApp extends StatelessWidget {
 // }
 
 // Future<Map<String, dynamic>> generateRandomAyah() async {
-//   //  await Future.delayed(Duration(seconds: 3));
-//   final totalAyahs = await getTotalAyahs(); // 123
+//   final totalAyahs = await getTotalAyahs();
 //   final randomAyahNumber = Random().nextInt(totalAyahs);
 
 //   final response = await http.get(Uri.parse(
@@ -64,5 +63,12 @@ class MyApp extends StatelessWidget {
 // void main() async {
 //   Map<String, dynamic> surahInfo = await generateRandomAyah();
 //   String ayah = surahInfo['data']['text']['arab'];
-//   print(ayah);
+
+//   if (ayah.isNotEmpty) {
+//     print(ayah);
+//   } else {
+//     print('بسم الله الرحمن الرحيم');
+//   }
+
+//   // print(ayah);
 // }

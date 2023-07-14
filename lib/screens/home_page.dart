@@ -1,9 +1,22 @@
+//  SizedBox(
+//                             width: double.infinity,
+//                             child: Text(
+//                               textAlign: TextAlign.center,
+//                               '$ayah',
+//                               style: const TextStyle(
+//                                 color: Colors.white,
+//                                 fontSize: 25,
+//                                 wordSpacing: 2,
+//                                 fontWeight: FontWeight.w600,
+//                                 fontFamily: 'Quran',
+//                               ),
+//                             ),
+//                           )
+
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:quran_api/services/quran_model.dart';
-
-import '../services/quran.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,24 +27,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isLoaded = false;
+
   final ImageProvider _assetsImage =
       const AssetImage('assets/images/mosque.jpg');
-  final ImageProvider _networkImage = const NetworkImage(
-      'https://source.unsplash.com/random/?quran,mosque,prayer,nature,rivers,islamic/?orientation=portrait');
+  ImageProvider _networkImage = const NetworkImage(
+      'https://source.unsplash.com/random/?quran,mosque,prayer,nature,rivers,tree,Flower,islamic,star,/?orientation=portrait');
 
+  String? ayah;
   QuranModel quranModel = QuranModel();
-//  late String surah;
-  late String ayah;
-//  late int numberOfAyah;
-
-  void updateUi() {
-    // surah = quranModel.surah;
-    getImage();
-    getAyah();
-    // numberOfAyah = quranModel.numberOfAyah;
-  }
-
-  QuranApi quranApi = QuranApi();
 
   void getImage() {
     _networkImage
@@ -46,27 +49,29 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     getImage();
-    print('ddd');
-    ayah = quranModel.ayah;
-    updateUi();
-    print('aaa');
-
+    getAyah();
     super.initState();
   }
 
-  String getAyah() {
-    if (ayah.isNotEmpty) {
-      return ayah;
-    } else {
-      return 'بسم الله الرحمن الرحيم';
-    }
+  getAyah() {
+    quranModel.getRandomAyah().then((value) {
+      ayah = value;
+      setState(() {});
+    });
+  }
+
+  changeImageAndImage() {
+    setState(() {
+      getImage();
+      getAyah();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: GestureDetector(
-        onTap: () => updateUi,
+        onTap: changeImageAndImage,
         child: Stack(children: [
           Container(
             decoration: BoxDecoration(
@@ -89,13 +94,28 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        getAyah(),
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
-                      ),
+                      ayah != null
+                          ? Text(
+                              '$ayah',
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                height: 1.8,
+                                color: Colors.white,
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Quran',
+                              ),
+                            )
+                          : const Text(
+                              'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 27,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Quran',
+                              ),
+                            ),
                     ],
                   ),
                 ),
